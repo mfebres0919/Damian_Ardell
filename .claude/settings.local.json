@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"s=open\\('styles.css',encoding='utf-8'\\).read\\(\\); print\\('styles.css braces', s.count\\('{'\\),'/',s.count\\('}'\\), 'OK' if s.count\\('{'\\)==s.count\\('}'\\) else 'MISMATCH'\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"s=open\\('styles.css',encoding='utf-8'\\).read\\(\\); print\\('styles.css braces', s.count\\('{'\\),'/',s.count\\('}'\\),'OK' if s.count\\('{'\\)==s.count\\('}'\\) else 'MISMATCH'\\)\")"
+    ]
+  }
+}

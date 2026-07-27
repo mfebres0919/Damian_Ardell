@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Abercrombie &amp; Scents</title>
+  <meta name="description" content="Secure checkout — Abercrombie &amp; Scents." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="checkout.css" />
+</head>
+<body class="checkout-page">
+
+  <!-- Slim checkout header -->
+  <header class="co-nav">
+    <div class="container co-nav__inner">
+      <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scents — home">
+        <span class="nav__mark" aria-hidden="true">A</span>
+        <span class="nav__wordmark">Abercrombie &amp; Scents</span>
+      </a>
+      <a class="co-nav__back" href="index.html#collection">&larr; Continue Shopping</a>
+    </div>
+  </header>
+
+  <main class="co">
+    <div class="container co__grid">
+
+      <!-- ---------------- LEFT: details form ---------------- -->
+      <section class="co__form" aria-label="Checkout details">
+
+        <h1 class="co__title">Checkout</h1>
+
+        <form id="checkout-form" novalidate>
+
+          <fieldset class="co__block">
+            <legend class="co__legend">Contact</legend>
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+            </label>
+          </fieldset>
+
+          <fieldset class="co__block">
+            <legend class="co__legend">Shipping Address</legend>
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">First name</span>
+                <input type="text" name="fname" autocomplete="given-name" required />
+              </label>
+              <label class="field">
+                <span class="field__label">Last name</span>
+                <input type="text" name="lname" autocomplete="family-name" required />
+              </label>
+            </div>
+            <label class="field">
+              <span class="field__label">Address</span>
+              <input type="text" name="address" autocomplete="street-address" required />
+            </label>
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">City</span>
+                <input type="text" name="city" autocomplete="address-level2" required />
+              </label>
+              <label class="field">
+                <span class="field__label">State</span>
+                <input type="text" name="state" autocomplete="address-level1" required />
+              </label>
+              <label class="field">
+                <span class="field__label">ZIP</span>
+                <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" required />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="co__block">
+            <legend class="co__legend">Payment</legend>
+            <p class="co__demo-note">Demo only — do not enter real card details.</p>
+            <label class="field">
+              <span class="field__label">Card number</span>
+              <input type="text" name="card" placeholder="1234 5678 9012 3456" inputmode="numeric" />
+            </label>
+            <div class="field-row">
+              <label class="field">
+                <span class="field__label">Expiry</span>
+                <input type="text" name="exp" placeholder="MM / YY" />
+              </label>
+              <label class="field">
+                <span class="field__label">CVC</span>
+                <input type="text" name="cvc" placeholder="123" inputmode="numeric" />
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="btn btn--primary co__place" type="submit">Place Order</button>
+
+        </form>
+      </section>
+
+      <!-- ---------------- RIGHT: order summary ---------------- -->
+      <aside class="co__summary" aria-label="Order summary">
+        <h2 class="co__summary-title">Order Summary</h2>
+
+        <div id="co-items" class="co__items"><!-- injected by main.js --></div>
+
+        <p id="co-empty" class="co__empty" hidden>
+          Your cart is empty. <a href="index.html#collection">Browse the collection</a>.
+        </p>
+
+        <dl class="co__totals" id="co-totals" hidden>
+          <div class="co__total-row">
+            <dt>Subtotal</dt>
+            <dd id="co-subtotal">$0.00</dd>
+          </div>
+          <div class="co__total-row">
+            <dt>Shipping</dt>
+            <dd id="co-shipping">Free</dd>
+          </div>
+          <div class="co__total-row co__total-row--grand">
+            <dt>Total</dt>
+            <dd id="co-total">$0.00</dd>
+          </div>
+        </dl>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Order-placed confirmation -->
+  <div class="co-done" id="co-done" aria-hidden="true">
+    <div class="co-done__card" role="dialog" aria-modal="true" aria-labelledby="co-done-title">
+      <svg class="co-done__check" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="24" />
+        <path d="M16 27l7 7 13-15" />
+      </svg>
+      <h2 class="co-done__title" id="co-done-title">Thank you</h2>
+      <p class="co-done__msg">
+        Your order has been placed. This is a demo — no payment was processed
+        and nothing will ship.
+      </p>
+      <a class="btn btn--primary" href="index.html">Back to Home</a>
+    </div>
+  </div>
+
+  <script src="checkout.js"></script>
+</body>
+</html>
