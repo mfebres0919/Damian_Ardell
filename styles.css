@@ -740,6 +740,52 @@
   color: var(--color-tan);
 }
 
+/* --- Founder badge + review rating ------------------------------------- */
+.story__founder {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.story__founder-divider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 46px;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    var(--border-hairline) 18%,
+    var(--border-hairline) 82%,
+    transparent 100%);
+}
+
+.story__reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.story__stars {
+  display: inline-flex;
+  gap: 3px;
+  color: var(--color-tan);
+}
+.story__stars svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.story__reviews-text {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+.story__reviews-text strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
 .story__cta {
   margin-top: var(--space-lg);
 }
