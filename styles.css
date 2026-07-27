@@ -710,7 +710,7 @@
   margin-bottom: var(--space-md);
   fill: none;
   stroke: var(--color-tan);
-  stroke-width: 1;
+  stroke-width: 11;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
