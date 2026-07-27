@@ -18,84 +18,189 @@
   <!-- Slim checkout header -->
   <header class="co-nav">
     <div class="container co-nav__inner">
+      <a class="co-nav__back" href="index.html#collection">&larr; Back to Shop</a>
+
       <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scents — home">
         <span class="nav__mark" aria-hidden="true">A</span>
         <span class="nav__wordmark">Abercrombie &amp; Scents</span>
       </a>
-      <a class="co-nav__back" href="index.html#collection">&larr; Continue Shopping</a>
+
+      <span class="co-nav__secure">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 10V8a6 6 0 0 1 12 0v2" />
+          <rect x="4.5" y="10" width="15" height="10" rx="2" />
+        </svg>
+        Secure Checkout
+      </span>
     </div>
   </header>
 
   <main class="co">
     <div class="container co__grid">
 
-      <!-- ---------------- LEFT: details form ---------------- -->
+      <!-- ---------------- LEFT: staged details form ---------------- -->
       <section class="co__form" aria-label="Checkout details">
 
         <h1 class="co__title">Checkout</h1>
 
+        <!-- Progress stepper -->
+        <ol class="co-steps" id="co-steps" aria-label="Checkout progress">
+          <li class="co-steps__step is-active" data-step-marker="1">
+            <span class="co-steps__dot">1</span>
+            <span class="co-steps__label">Shipping</span>
+          </li>
+          <li class="co-steps__step" data-step-marker="2">
+            <span class="co-steps__dot">2</span>
+            <span class="co-steps__label">Payment</span>
+          </li>
+          <li class="co-steps__step" data-step-marker="3">
+            <span class="co-steps__dot">3</span>
+            <span class="co-steps__label">Review</span>
+          </li>
+        </ol>
+
         <form id="checkout-form" novalidate>
 
-          <fieldset class="co__block">
-            <legend class="co__legend">Contact</legend>
-            <label class="field">
-              <span class="field__label">Email</span>
-              <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
-            </label>
-          </fieldset>
+          <!-- ===== STEP 1 — SHIPPING ===== -->
+          <div class="co-step" data-step="1">
 
-          <fieldset class="co__block">
-            <legend class="co__legend">Shipping Address</legend>
-            <div class="field-row">
+            <fieldset class="co__block">
+              <legend class="co__legend">Contact Information</legend>
               <label class="field">
-                <span class="field__label">First name</span>
-                <input type="text" name="fname" autocomplete="given-name" required />
+                <span class="field__label">Email address</span>
+                <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
               </label>
-              <label class="field">
-                <span class="field__label">Last name</span>
-                <input type="text" name="lname" autocomplete="family-name" required />
-              </label>
-            </div>
-            <label class="field">
-              <span class="field__label">Address</span>
-              <input type="text" name="address" autocomplete="street-address" required />
-            </label>
-            <div class="field-row">
-              <label class="field">
-                <span class="field__label">City</span>
-                <input type="text" name="city" autocomplete="address-level2" required />
-              </label>
-              <label class="field">
-                <span class="field__label">State</span>
-                <input type="text" name="state" autocomplete="address-level1" required />
-              </label>
-              <label class="field">
-                <span class="field__label">ZIP</span>
-                <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" required />
-              </label>
-            </div>
-          </fieldset>
+            </fieldset>
 
-          <fieldset class="co__block">
-            <legend class="co__legend">Payment</legend>
-            <p class="co__demo-note">Demo only — do not enter real card details.</p>
-            <label class="field">
-              <span class="field__label">Card number</span>
-              <input type="text" name="card" placeholder="1234 5678 9012 3456" inputmode="numeric" />
-            </label>
-            <div class="field-row">
+            <fieldset class="co__block">
+              <legend class="co__legend">Shipping Address</legend>
               <label class="field">
-                <span class="field__label">Expiry</span>
-                <input type="text" name="exp" placeholder="MM / YY" />
+                <span class="field__label">Full name</span>
+                <input type="text" name="fname" autocomplete="name" required />
               </label>
               <label class="field">
-                <span class="field__label">CVC</span>
-                <input type="text" name="cvc" placeholder="123" inputmode="numeric" />
+                <span class="field__label">Address line 1</span>
+                <input type="text" name="address1" placeholder="House number and street name" autocomplete="address-line1" required />
               </label>
-            </div>
-          </fieldset>
+              <label class="field">
+                <span class="field__label">Address line 2 <span class="field__opt">(optional)</span></span>
+                <input type="text" name="address2" placeholder="Apartment, suite, etc." autocomplete="address-line2" />
+              </label>
+              <div class="field-row">
+                <label class="field">
+                  <span class="field__label">City</span>
+                  <input type="text" name="city" autocomplete="address-level2" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">State / Province</span>
+                  <input type="text" name="state" autocomplete="address-level1" required />
+                </label>
+              </div>
+              <div class="field-row">
+                <label class="field">
+                  <span class="field__label">ZIP / Postal code</span>
+                  <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">Country</span>
+                  <select class="field__select" name="country" required>
+                    <option value="United States" selected>United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                  </select>
+                </label>
+              </div>
 
-          <button class="btn btn--primary co__place" type="submit">Place Order</button>
+              <label class="co-check">
+                <input type="checkbox" name="save" checked />
+                <span class="co-check__box" aria-hidden="true">
+                  <svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.5" /></svg>
+                </span>
+                <span>Save this information for next time</span>
+              </label>
+            </fieldset>
+
+            <div class="co-step__nav">
+              <a class="co-step__back" href="index.html#collection">&larr; Back to Shop</a>
+              <button class="btn btn--primary co-step__next" type="button" data-next>
+                Continue to Payment
+                <svg class="btn__icon" viewBox="0 0 512.009 512.009" aria-hidden="true"><path d="M508.625 247.801 392.262 131.437c-4.18-4.881-11.526-5.45-16.407-1.269-4.881 4.18-5.45 11.526-1.269 16.407.39.455.814.88 1.269 1.269l96.465 96.582H11.636C5.21 244.426 0 249.636 0 256.063s5.21 11.636 11.636 11.636H472.32l-96.465 96.465c-4.881 4.18-5.45 11.526-1.269 16.407s11.526 5.45 16.407 1.269c.455-.39.88-.814 1.269-1.269l116.364-116.364c4.512-4.472 4.512-11.802 0-16.341z"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== STEP 2 — PAYMENT ===== -->
+          <div class="co-step" data-step="2" hidden>
+
+            <fieldset class="co__block">
+              <legend class="co__legend">Payment</legend>
+              <p class="co__demo-note">Demo only — do not enter real card details.</p>
+              <label class="field">
+                <span class="field__label">Cardholder name</span>
+                <input type="text" name="cardname" autocomplete="cc-name" required />
+              </label>
+              <label class="field">
+                <span class="field__label">Card number</span>
+                <input type="text" name="card" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number" required />
+              </label>
+              <div class="field-row">
+                <label class="field">
+                  <span class="field__label">Expiry</span>
+                  <input type="text" name="exp" placeholder="MM / YY" autocomplete="cc-exp" required />
+                </label>
+                <label class="field">
+                  <span class="field__label">CVC</span>
+                  <input type="text" name="cvc" placeholder="123" inputmode="numeric" autocomplete="cc-csc" required />
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="co-step__nav">
+              <button class="co-step__back" type="button" data-prev>&larr; Back to Shipping</button>
+              <button class="btn btn--primary co-step__next" type="button" data-next>
+                Continue to Review
+                <svg class="btn__icon" viewBox="0 0 512.009 512.009" aria-hidden="true"><path d="M508.625 247.801 392.262 131.437c-4.18-4.881-11.526-5.45-16.407-1.269-4.881 4.18-5.45 11.526-1.269 16.407.39.455.814.88 1.269 1.269l96.465 96.582H11.636C5.21 244.426 0 249.636 0 256.063s5.21 11.636 11.636 11.636H472.32l-96.465 96.465c-4.881 4.18-5.45 11.526-1.269 16.407s11.526 5.45 16.407 1.269c.455-.39.88-.814 1.269-1.269l116.364-116.364c4.512-4.472 4.512-11.802 0-16.341z"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== STEP 3 — REVIEW ===== -->
+          <div class="co-step" data-step="3" hidden>
+
+            <fieldset class="co__block">
+              <legend class="co__legend">Review Your Order</legend>
+
+              <div class="co-review">
+                <div class="co-review__row">
+                  <div>
+                    <p class="co-review__label">Contact</p>
+                    <p class="co-review__val" id="rv-contact">—</p>
+                  </div>
+                  <button class="co-review__edit" type="button" data-goto="1">Edit</button>
+                </div>
+                <div class="co-review__row">
+                  <div>
+                    <p class="co-review__label">Ship to</p>
+                    <p class="co-review__val" id="rv-address">—</p>
+                  </div>
+                  <button class="co-review__edit" type="button" data-goto="1">Edit</button>
+                </div>
+                <div class="co-review__row">
+                  <div>
+                    <p class="co-review__label">Payment</p>
+                    <p class="co-review__val" id="rv-payment">—</p>
+                  </div>
+                  <button class="co-review__edit" type="button" data-goto="2">Edit</button>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="co-step__nav">
+              <button class="co-step__back" type="button" data-prev>&larr; Back to Payment</button>
+              <button class="btn btn--primary co-step__next" type="submit">Place Order</button>
+            </div>
+          </div>
 
         </form>
       </section>
@@ -104,7 +209,7 @@
       <aside class="co__summary" aria-label="Order summary">
         <h2 class="co__summary-title">Order Summary</h2>
 
-        <div id="co-items" class="co__items"><!-- injected by main.js --></div>
+        <div id="co-items" class="co__items"><!-- injected by checkout.js --></div>
 
         <p id="co-empty" class="co__empty" hidden>
           Your cart is empty. <a href="index.html#collection">Browse the collection</a>.
@@ -124,10 +229,123 @@
             <dd id="co-total">$0.00</dd>
           </div>
         </dl>
+
+        <ul class="co-trust" id="co-trust" hidden>
+          <li class="co-trust__item">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            Secure<br />Checkout
+          </li>
+          <li class="co-trust__item">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 7h11v8H3z" />
+              <path d="M14 10h4l3 3v2h-7z" />
+              <circle cx="7" cy="17" r="2" />
+              <circle cx="17" cy="17" r="2" />
+            </svg>
+            Free<br />Shipping
+          </li>
+          <li class="co-trust__item">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12a8 8 0 1 1 2.3 5.6" />
+              <path d="M4 20v-4h4" />
+            </svg>
+            Easy<br />Returns
+          </li>
+        </ul>
       </aside>
 
     </div>
   </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer__top">
+
+        <div class="footer__brand">
+          <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scents — home">
+            <span class="nav__mark" aria-hidden="true">A</span>
+            <span class="nav__wordmark">Abercrombie &amp; Scents</span>
+          </a>
+          <p class="footer__tagline">
+            Handcrafted goat milk soap &amp; roll-on scented oils, made in small
+            batches with real botanicals.
+          </p>
+
+          <form class="footer__news" id="newsletter-form" novalidate>
+            <label class="footer__news-label" for="newsletter-email">Join our newsletter</label>
+            <div class="footer__news-field">
+              <input class="footer__news-input" id="newsletter-email" type="email"
+                     name="email" placeholder="your@email.com" autocomplete="email" required />
+              <button class="footer__news-btn" type="submit" aria-label="Subscribe">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12h15M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+            <p class="footer__news-note" id="newsletter-note" role="status" aria-live="polite">
+              No spam, ever. Unsubscribe anytime.
+            </p>
+          </form>
+        </div>
+
+        <nav class="footer__col" aria-label="Shop">
+          <h3 class="footer__heading">Shop</h3>
+          <a class="footer__link" href="index.html#collection">Soap Bars</a>
+          <a class="footer__link" href="index.html#collection">Scented Oils</a>
+          <a class="footer__link" href="index.html#custom">Custom Blends</a>
+          <a class="footer__link" href="index.html#collection">Gift Sets</a>
+        </nav>
+
+        <nav class="footer__col" aria-label="Company">
+          <h3 class="footer__heading">Company</h3>
+          <a class="footer__link" href="index.html#about">Our Story</a>
+          <a class="footer__link" href="index.html#contact">Contact</a>
+          <a class="footer__link" href="index.html#collection">Wholesale</a>
+          <a class="footer__link" href="index.html#contact">FAQ</a>
+        </nav>
+
+        <div class="footer__col">
+          <h3 class="footer__heading">Follow</h3>
+          <div class="footer__social">
+            <a class="footer__icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a class="footer__icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.5 8.5h2V5.6h-2.3c-2 0-3.2 1.2-3.2 3.3v1.7H9v2.9h2v6.9h3v-6.9h2.2l.4-2.9H14v-1.4c0-.5.2-.7.7-.7Z" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a class="footer__icon" href="#" aria-label="Pinterest">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.8 18c-.3-1 0-2.3.2-3.3l1-4.2s-.3-.5-.3-1.3c0-1.2.7-2 1.5-2 .7 0 1.1.6 1.1 1.2 0 .8-.5 1.9-.7 3-.2.9.4 1.6 1.3 1.6 1.6 0 2.7-2 2.7-4.4 0-1.8-1.2-3.2-3.5-3.2a4 4 0 0 0-4.1 4c0 .8.3 1.4.7 1.8l-.3 1c0 .2-.2.3-.4.2-1-.5-1.6-1.9-1.6-3.2 0-2.6 1.9-5 5.4-5 2.9 0 5 2 5 4.7 0 2.9-1.8 5.2-4.3 5.2-.8 0-1.6-.4-1.9-.9l-.5 2c-.2.7-.6 1.5-.9 2Z" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 Abercrombie &amp; Scents. All rights reserved.</p>
+        <div class="footer__legal">
+          <a class="footer__link" href="#">Privacy Policy</a>
+          <a class="footer__link" href="#">Terms of Service</a>
+          <a class="footer__link" href="#">Shipping &amp; Returns</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
 
   <!-- Order-placed confirmation -->
   <div class="co-done" id="co-done" aria-hidden="true">

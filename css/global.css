@@ -506,3 +506,185 @@ h3 { font-size: var(--fs-h3); }
 
   .nav__cart-label { margin-right: auto; }
 }
+
+/* --------------------------------------------------------------------------
+   7. FOOTER  (shared — used on the home + checkout pages)
+   -------------------------------------------------------------------------- */
+.footer {
+  padding-block: var(--space-2xl) var(--space-lg);
+  background-color: var(--color-black);
+  border-top: 1px solid var(--border-hairline);
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: var(--space-xl) var(--space-lg);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.footer__brand { max-width: 26rem; }
+
+.footer__brand .nav__logo { margin-bottom: var(--space-md); }
+
+.footer__tagline {
+  color: var(--text-muted);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+}
+
+/* --- Newsletter (in the footer brand column) ---------------------------- */
+.footer__news {
+  margin-top: var(--space-lg);
+  max-width: 22rem;
+}
+
+.footer__news-label {
+  display: block;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-tan);
+  margin-bottom: 0.6rem;
+}
+
+.footer__news-field {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.3rem 0.3rem 1.1rem;
+  transition: border-color var(--transition);
+}
+.footer__news-field:focus-within { border-color: var(--color-sage); }
+
+.footer__news-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0;
+  color: var(--text-primary);
+  font-size: var(--fs-small);
+}
+.footer__news-input::placeholder { color: var(--text-subtle); }
+.footer__news-input:focus { outline: none; }
+
+.footer__news-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--color-sage);
+  color: var(--color-black);
+  transition: background-color var(--transition);
+}
+.footer__news-btn:hover { background-color: var(--color-tan); }
+.footer__news-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer__news-note {
+  margin-top: 0.7rem;
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+}
+.footer__news-note.is-success { color: var(--color-sage); }
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.footer__heading {
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-tan);
+  margin-bottom: 0.35rem;
+}
+
+.footer__link {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.footer__link:hover { color: var(--text-primary); }
+
+.footer__social {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.footer__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-hairline);
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: color var(--transition), border-color var(--transition);
+}
+.footer__icon:hover {
+  color: var(--color-linen);
+  border-color: var(--color-sage);
+}
+.footer__icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-md);
+  flex-wrap: wrap;
+  padding-top: var(--space-md);
+}
+
+.footer__copy {
+  font-size: var(--fs-small);
+  color: var(--text-subtle);
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+@media (max-width: 860px) {
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer__brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 540px) {
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
