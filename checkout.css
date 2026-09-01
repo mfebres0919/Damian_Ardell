@@ -501,3 +501,109 @@
 }
 
 .co__error a { text-decoration: underline; }
+
+/* --- Fulfillment picker -------------------------------------------------- */
+.co-fulfill {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: var(--space-md);
+}
+
+.co-fulfill__opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition), background-color var(--transition);
+}
+
+.co-fulfill__opt:hover { border-color: var(--color-sage); }
+
+.co-fulfill__opt:has(input:checked) {
+  border-color: var(--color-sage);
+  background-color: rgba(138, 154, 123, 0.08);
+}
+
+/* Keyboard focus has to land on the label, since the radio itself is small. */
+.co-fulfill__opt:focus-within { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+.co-fulfill__opt input { margin-top: 0.25rem; accent-color: var(--color-sage); flex-shrink: 0; }
+
+.co-fulfill__body { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.co-fulfill__title { color: var(--text-primary); font-size: 0.95rem; }
+
+.co-fulfill__note { color: var(--text-muted); font-size: 0.8rem; }
+
+.co__hint {
+  margin-bottom: var(--space-md);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* --- Thank-you page ------------------------------------------------------ */
+.ty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100svh - var(--nav-height));
+  padding-block: var(--space-xl);
+}
+
+.ty__inner {
+  /* Wide enough that the two buttons sit on one row once the container's
+     gutter is subtracted; the text is narrowed separately below. */
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ty__check {
+  width: 68px;
+  height: 68px;
+  /* The reset sets svg { display: block }, so text-align can't centre it. */
+  margin-inline: auto;
+  margin-bottom: var(--space-md);
+  fill: none;
+  stroke: var(--color-sage);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ty__title {
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.ty__msg {
+  max-width: 34rem;
+  margin-inline: auto;
+  margin-bottom: var(--space-sm);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.ty__sub {
+  max-width: 34rem;
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.ty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}

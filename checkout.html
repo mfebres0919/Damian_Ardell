@@ -40,11 +40,10 @@
       <!-- ---------------- LEFT: staged details form ---------------- -->
       <section class="co__form" aria-label="Checkout details">
 
-        <h1 class="co__title">Request an Order</h1>
+        <h1 class="co__title">Checkout</h1>
         <p class="co__lead">
-          Tell us what you&rsquo;d like and how to reach you. Damian will get in
-          touch to arrange a time to meet up and settle payment in person &mdash;
-          no card details needed here.
+          Choose how you&rsquo;d like to get your order, then pay securely through
+          Square. Card and Cash App Pay are both accepted.
         </p>
 
         <!-- Progress stepper -->
@@ -59,7 +58,7 @@
           </li>
         </ol>
 
-        <form id="checkout-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <form id="checkout-form" novalidate>
 
           <!-- ===== STEP 1 — YOUR DETAILS ===== -->
           <div class="co-step" data-step="1">
@@ -81,8 +80,31 @@
             </fieldset>
 
             <fieldset class="co__block">
-              <legend class="co__legend">Meeting up</legend>
-              <label class="field">
+              <legend class="co__legend">How would you like it?</legend>
+
+              <div class="co-fulfill">
+                <label class="co-fulfill__opt">
+                  <input type="radio" name="fulfillment" value="ship" checked />
+                  <span class="co-fulfill__body">
+                    <span class="co-fulfill__title">Ship it to me</span>
+                    <span class="co-fulfill__note" id="co-ship-note">Flat $6 &mdash; free over $50</span>
+                  </span>
+                </label>
+                <label class="co-fulfill__opt">
+                  <input type="radio" name="fulfillment" value="pickup" />
+                  <span class="co-fulfill__body">
+                    <span class="co-fulfill__title">Pick it up in person</span>
+                    <span class="co-fulfill__note">Meet Damian locally &mdash; no shipping cost</span>
+                  </span>
+                </label>
+              </div>
+
+              <p class="co__hint" id="co-ship-hint">
+                You&rsquo;ll enter your shipping address on the secure Square
+                payment page.
+              </p>
+
+              <label class="field" id="co-pickup-field" hidden>
                 <span class="field__label">
                   When works for you? <span class="field__opt">(optional)</span>
                 </span>
@@ -122,33 +144,29 @@
                 </div>
                 <div class="co-review__row">
                   <div>
-                    <p class="co-review__label">Meeting up</p>
-                    <p class="co-review__val" id="rv-pickup">—</p>
+                    <p class="co-review__label">Delivery</p>
+                    <p class="co-review__val" id="rv-fulfill">—</p>
                   </div>
                   <button class="co-review__edit" type="button" data-goto="1">Edit</button>
                 </div>
                 <div class="co-review__row">
                   <div>
                     <p class="co-review__label">Payment</p>
-                    <p class="co-review__val">In person when you meet up</p>
+                    <p class="co-review__val">Card or Cash App Pay, on the next page</p>
                   </div>
                 </div>
               </div>
-
-              <!-- Populated by checkout.js so the order reaches Damian's inbox -->
-              <input type="hidden" name="order" id="rv-order-field" />
-              <input type="hidden" name="order_total" id="rv-total-field" />
-              <input type="hidden" name="_subject" value="New order request — Abercrombie & Scentz" />
             </fieldset>
 
             <p class="co__error" id="co-error" role="alert" hidden>
-              Something went wrong sending your request. Please try again, or
-              reach us from the <a href="index.html#contact">contact form</a>.
+              <span id="co-error-msg">Something went wrong starting checkout.</span>
+              Please try again, or reach us from the
+              <a href="index.html#contact">contact form</a>.
             </p>
 
             <div class="co-step__nav">
               <button class="co-step__back" type="button" data-prev>&larr; Back to Your Details</button>
-              <button class="btn btn--primary co-step__next" type="submit">Send Order Request</button>
+              <button class="btn btn--primary co-step__next" type="submit">Continue to Payment</button>
             </div>
           </div>
 
@@ -170,6 +188,10 @@
             <dt>Subtotal</dt>
             <dd id="co-subtotal">$0.00</dd>
           </div>
+          <div class="co__total-row" id="co-ship-row">
+            <dt>Shipping</dt>
+            <dd id="co-shipping">$6.00</dd>
+          </div>
           <div class="co__total-row co__total-row--grand">
             <dt>Total</dt>
             <dd id="co-total">$0.00</dd>
@@ -182,7 +204,7 @@
               <path d="M12 3l7 3v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6z" />
               <path d="M9 12l2 2 4-4" />
             </svg>
-            Meet in<br />Person
+            Secure<br />Checkout
           </li>
           <li class="co-trust__item">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -190,7 +212,7 @@
               <path d="M2.5 10h19" />
               <path d="M4 20L20 4" />
             </svg>
-            No Card<br />Needed
+            Ships or<br />Pickup
           </li>
           <li class="co-trust__item">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -284,7 +306,7 @@
         <div class="footer__legal">
           <a class="footer__link" href="#">Privacy Policy</a>
           <a class="footer__link" href="#">Terms of Service</a>
-          <a class="footer__link" href="#">Pickup &amp; Returns</a>
+          <a class="footer__link" href="#">Shipping &amp; Returns</a>
         </div>
       </div>
 
@@ -298,10 +320,10 @@
         <circle cx="26" cy="26" r="24" />
         <path d="M16 27l7 7 13-15" />
       </svg>
-      <h2 class="co-done__title" id="co-done-title">Request sent</h2>
+      <h2 class="co-done__title" id="co-done-title">Thank you</h2>
       <p class="co-done__msg">
-        Thanks — your order request is on its way to Damian. He&rsquo;ll reach out
-        shortly to set up a time to meet and take payment then.
+        Your payment went through and Damian has your order. A receipt is on its
+        way to your email.
       </p>
       <a class="btn btn--primary" href="index.html">Back to Home</a>
     </div>

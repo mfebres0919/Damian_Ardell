@@ -308,20 +308,30 @@
     });
   }
 
-  /* --- Contact form (mockup — no real submission) ------------------------ */
+  /* --- Contact form ------------------------------------------------------
+     Submits natively so Formspree can redirect to thanks.html. We only run
+     validation here — intercepting the submit with fetch() would keep the
+     browser on this page and the redirect would never fire.
+     --------------------------------------------------------------------- */
   const contactForm = document.getElementById('contact-form');
   const contactNote = document.getElementById('contact-note');
 
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!contactForm.checkValidity()) { contactForm.reportValidity(); return; }
-
-      if (contactNote) {
-        contactNote.textContent = 'Message sent — we’ll be in touch within two business days.';
-        contactNote.classList.add('is-success');
+      if (!contactForm.checkValidity()) {
+        e.preventDefault();
+        contactForm.reportValidity();
+        return;
       }
-      contactForm.reset();
+
+      const btn = contactForm.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      if (contactNote) {
+        contactNote.textContent = '';
+        contactNote.classList.remove('is-success', 'is-error');
+      }
+      // No preventDefault — the browser posts to Formspree and follows the
+      // redirect configured on the form's dashboard.
     });
   }
 

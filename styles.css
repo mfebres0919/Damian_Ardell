@@ -932,6 +932,7 @@
   min-height: 1.2em;
 }
 .contact__note.is-success { color: var(--color-sage); }
+.contact__note.is-error   { color: #E0876F; }
 
 @media (max-width: 760px) {
   .contact__grid { grid-template-columns: 1fr; }

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — Abercrombie &amp; Scentz</title>
+  <meta name="description" content="Thanks for reaching out to Abercrombie &amp; Scentz — we’ll be in touch shortly." />
+  <!-- A confirmation page has no business in search results. -->
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="checkout.css" />
+</head>
+<body class="checkout-page">
+
+  <!-- Slim header, matching the checkout flow -->
+  <header class="co-nav">
+    <div class="container co-nav__inner">
+      <a class="co-nav__back" href="index.html">&larr; Back to Home</a>
+
+      <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scentz — home">
+        <img class="nav__logo-img" src="images/logo-white.png" alt="" width="1113" height="1135" decoding="async" />
+      </a>
+
+      <span class="co-nav__secure" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <main class="ty">
+    <div class="container ty__inner">
+
+      <svg class="ty__check" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="24" />
+        <path d="M16 27l7 7 13-15" />
+      </svg>
+
+      <h1 class="ty__title">Thank you</h1>
+
+      <p class="ty__msg">
+        Your message is on its way to Damian. He reads everything himself, so
+        expect a reply within two business days — usually sooner.
+      </p>
+
+      <p class="ty__sub">
+        In the meantime, have a look at what&rsquo;s curing in the workshop.
+      </p>
+
+      <div class="ty__actions">
+        <a class="btn btn--primary" href="index.html#collection">Browse the Collection</a>
+        <a class="btn btn--ghost" href="index.html">Back to Home</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer__top">
+
+        <div class="footer__brand">
+          <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scentz — home">
+            <img class="nav__logo-img" src="images/logo-white.png" alt="" width="1113" height="1135" decoding="async" loading="lazy" />
+          </a>
+          <p class="footer__tagline">
+            Handcrafted goat milk soap &amp; roll-on scented oils, made in small
+            batches with real botanicals.
+          </p>
+
+          <form class="footer__news" id="newsletter-form" novalidate>
+            <label class="footer__news-label" for="newsletter-email">Join our newsletter</label>
+            <div class="footer__news-field">
+              <input class="footer__news-input" id="newsletter-email" type="email"
+                     name="email" placeholder="your@email.com" autocomplete="email" required />
+              <button class="footer__news-btn" type="submit" aria-label="Subscribe">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12h15M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </div>
+            <p class="footer__news-note" id="newsletter-note" role="status" aria-live="polite">
+              No spam, ever. Unsubscribe anytime.
+            </p>
+          </form>
+        </div>
+
+        <nav class="footer__col" aria-label="Shop">
+          <h3 class="footer__heading">Shop</h3>
+          <a class="footer__link" href="index.html#collection">Soap Bars</a>
+          <a class="footer__link" href="index.html#collection">Scented Oils</a>
+          <a class="footer__link" href="index.html#custom">Custom Blends</a>
+          <a class="footer__link" href="index.html#collection">Gift Sets</a>
+        </nav>
+
+        <nav class="footer__col" aria-label="Company">
+          <h3 class="footer__heading">Company</h3>
+          <a class="footer__link" href="index.html#about">Our Story</a>
+          <a class="footer__link" href="index.html#contact">Contact</a>
+          <a class="footer__link" href="index.html#collection">Wholesale</a>
+          <a class="footer__link" href="index.html#contact">FAQ</a>
+        </nav>
+
+        <div class="footer__col">
+          <h3 class="footer__heading">Follow</h3>
+          <div class="footer__social">
+            <a class="footer__icon" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a class="footer__icon" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14.5 8.5h2V5.6h-2.3c-2 0-3.2 1.2-3.2 3.3v1.7H9v2.9h2v6.9h3v-6.9h2.2l.4-2.9H14v-1.4c0-.5.2-.7.7-.7Z" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a class="footer__icon" href="#" aria-label="Pinterest">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.8 18c-.3-1 0-2.3.2-3.3l1-4.2s-.3-.5-.3-1.3c0-1.2.7-2 1.5-2 .7 0 1.1.6 1.1 1.2 0 .8-.5 1.9-.7 3-.2.9.4 1.6 1.3 1.6 1.6 0 2.7-2 2.7-4.4 0-1.8-1.2-3.2-3.5-3.2a4 4 0 0 0-4.1 4c0 .8.3 1.4.7 1.8l-.3 1c0 .2-.2.3-.4.2-1-.5-1.6-1.9-1.6-3.2 0-2.6 1.9-5 5.4-5 2.9 0 5 2 5 4.7 0 2.9-1.8 5.2-4.3 5.2-.8 0-1.6-.4-1.9-.9l-.5 2c-.2.7-.6 1.5-.9 2Z" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 Abercrombie &amp; Scentz. All rights reserved.</p>
+        <div class="footer__legal">
+          <a class="footer__link" href="#">Privacy Policy</a>
+          <a class="footer__link" href="#">Terms of Service</a>
+          <a class="footer__link" href="#">Shipping &amp; Returns</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

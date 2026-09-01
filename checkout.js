@@ -3,14 +3,21 @@
    Reads the same localStorage cart written on the home page.
    - Order summary items stay editable here (qty +/- and remove).
    - Details are collected across two stages: Your Details → Review.
-   No payment is taken here: the order request is emailed to Damian via
-   Formspree, and payment happens in person when he meets the customer.
+   Payment is taken by Square: the cart is posted to a serverless function
+   which builds a Square hosted checkout, and we redirect the customer there.
    ========================================================================== */
 
 (function () {
   'use strict';
 
   const CART_KEY = 'as_cart';
+  const SHIPPING_FLAT      = 6.00;
+  const FREE_SHIPPING_OVER = 50.00;
+
+  function isShipping() {
+    const el = document.querySelector('input[name="fulfillment"]:checked');
+    return !el || el.value === 'ship';
+  }
 
   function readCart() {
     try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
@@ -34,6 +41,8 @@
   const totalsEl   = document.getElementById('co-totals');
   const subtotalEl = document.getElementById('co-subtotal');
   const totalEl    = document.getElementById('co-total');
+  const shipRowEl  = document.getElementById('co-ship-row');
+  const shipEl     = document.getElementById('co-shipping');
   const trustEl    = document.getElementById('co-trust');
   const form       = document.getElementById('checkout-form');
   const stepsNav   = document.getElementById('co-steps');
@@ -83,7 +92,12 @@
 
     const subtotal = cart.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
     if (subtotalEl) subtotalEl.textContent = money(subtotal);
-    if (totalEl)    totalEl.textContent    = money(subtotal); // no shipping or tax — total is just the subtotal
+    // Mirrors the rates in netlify/functions/create-checkout.js — Square
+    // recalculates authoritatively, this is only the on-page preview.
+    const ship = isShipping() ? (subtotal >= FREE_SHIPPING_OVER ? 0 : SHIPPING_FLAT) : 0;
+    if (shipRowEl) shipRowEl.hidden = !isShipping();
+    if (shipEl)    shipEl.textContent = ship === 0 ? 'Free' : money(ship);
+    if (totalEl)   totalEl.textContent = money(subtotal + ship);
   }
 
   // Line controls (event delegation)
@@ -144,7 +158,7 @@
 
   function fillReview() {
     const contact = document.getElementById('rv-contact');
-    const pickup  = document.getElementById('rv-pickup');
+    const pickup  = document.getElementById('rv-fulfill');
 
     if (contact) {
       const parts = [val('name'), val('email'), val('phone')].filter(Boolean);
@@ -152,25 +166,10 @@
     }
 
     if (pickup) {
-      const parts = [val('pickup'), val('notes')].filter(Boolean);
-      pickup.innerHTML = parts.join('<br />') || 'No preference given';
-    }
-
-    // The cart lives in localStorage, so fold it into hidden fields —
-    // otherwise the email would arrive with contact details and no order.
-    const cart = readCart();
-    const orderField = document.getElementById('rv-order-field');
-    const totalField = document.getElementById('rv-total-field');
-
-    if (orderField) {
-      orderField.value = cart.map(function (i) {
-        return i.qty + ' x ' + i.name + ' — ' + money(i.price * i.qty);
-      }).join('\n');
-    }
-    if (totalField) {
-      totalField.value = money(cart.reduce(function (sum, i) {
-        return sum + i.price * i.qty;
-      }, 0));
+      const parts = isShipping()
+        ? ['Shipped to the address you enter at payment']
+        : ['Local pickup', val('pickup'), val('notes')].filter(Boolean);
+      pickup.innerHTML = parts.join('<br />');
     }
   }
 
@@ -187,37 +186,75 @@
       }
     });
 
-    // Send the order request to Damian's inbox via Formspree, then confirm.
+    // Build a Square checkout server-side, then hand the customer over to it.
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
 
       const btn = form.querySelector('button[type="submit"]');
       const label = btn ? btn.textContent : '';
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      const err = document.getElementById('co-error');
+      if (err) err.hidden = true;
+      if (btn) { btn.disabled = true; btn.textContent = 'Starting checkout…'; }
 
-      fetch(form.action, {
+      fetch('/.netlify/functions/create-checkout', {
         method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // Only ids and quantities — the function prices the order itself.
+          cart: readCart().map(function (i) { return { id: i.id, qty: i.qty }; }),
+          fulfillment: isShipping() ? 'ship' : 'pickup',
+          pickup: val('pickup'),
+          email:  val('email'),
+          phone:  val('phone'),
+          origin: window.location.origin
+        })
       })
         .then(function (res) {
-          if (!res.ok) throw new Error('Request failed');
-          clearCart();
-          const done = document.getElementById('co-done');
-          if (done) {
-            done.classList.add('is-open');
-            done.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-          }
+          return res.json().then(function (data) {
+            if (!res.ok) throw new Error(data.error || 'Checkout failed');
+            return data;
+          });
         })
-        .catch(function () {
-          // Don't clear the cart on failure — the customer would lose the order.
+        .then(function (data) {
+          // Cart is cleared on return from Square, not here — a customer who
+          // abandons payment would otherwise come back to an empty cart.
+          window.location.href = data.url;
+        })
+        .catch(function (e) {
           if (btn) { btn.disabled = false; btn.textContent = label; }
-          const err = document.getElementById('co-error');
+          const msg = document.getElementById('co-error-msg');
+          if (msg) msg.textContent = e.message || 'Something went wrong.';
           if (err) err.hidden = false;
         });
     });
+  }
+
+  /* --- Fulfillment toggle ------------------------------------------------ */
+  const pickupField = document.getElementById('co-pickup-field');
+  const shipHint    = document.getElementById('co-ship-hint');
+
+  function syncFulfillment() {
+    const ship = isShipping();
+    if (pickupField) pickupField.hidden = ship;
+    if (shipHint)    shipHint.hidden    = !ship;
+    renderSummary();
+  }
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('input[name="fulfillment"]'),
+    function (r) { r.addEventListener('change', syncFulfillment); }
+  );
+
+  /* --- Returning from a completed Square checkout ------------------------- */
+  if (new URLSearchParams(window.location.search).get('status') === 'success') {
+    clearCart();
+    const done = document.getElementById('co-done');
+    if (done) {
+      done.classList.add('is-open');
+      done.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   // Keep the summary in sync if the cart changes in another tab.
@@ -241,5 +278,6 @@
   }
 
   renderSummary();
+  syncFulfillment();
   showStep(1, true);
 })();

@@ -1,0 +1,7 @@
+# Static site + one serverless function that creates the Square checkout.
+[build]
+  publish    = "."
+  functions  = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"

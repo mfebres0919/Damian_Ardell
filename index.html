@@ -507,7 +507,9 @@
           </ul>
         </div>
 
-        <form class="contact__form" id="contact-form" novalidate>
+        <form class="contact__form" id="contact-form"
+              action="https://formspree.io/f/xbgjodqd" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New contact message — Abercrombie &amp; Scentz" />
           <div class="field-row">
             <label class="field">
               <span class="field__label">Name</span>
@@ -525,7 +527,7 @@
               <option value="" disabled selected>Choose a topic…</option>
               <option value="custom">Custom blend request</option>
               <option value="general">General question</option>
-              <option value="order">Order or pickup help</option>
+              <option value="order">Order or shipping help</option>
               <option value="wholesale">Wholesale &amp; bulk orders</option>
               <option value="other">Something else</option>
             </select>
@@ -626,7 +628,7 @@
         <div class="footer__legal">
           <a class="footer__link" href="#">Privacy Policy</a>
           <a class="footer__link" href="#">Terms of Service</a>
-          <a class="footer__link" href="#">Pickup &amp; Returns</a>
+          <a class="footer__link" href="#">Shipping &amp; Returns</a>
         </div>
       </div>
 
@@ -652,8 +654,8 @@
         <span>Subtotal</span>
         <span id="cart-subtotal">$0.00</span>
       </div>
-      <p class="drawer__note">No shipping &mdash; we&rsquo;ll arrange a time to meet up.</p>
-      <a class="btn btn--primary drawer__checkout" href="checkout.html">Request Order</a>
+      <p class="drawer__note">Shipping or local pickup, chosen at checkout.</p>
+      <a class="btn btn--primary drawer__checkout" href="checkout.html">Checkout</a>
     </footer>
   </aside>
 
@@ -681,7 +683,7 @@
         </div>
 
         <div class="modal__actions">
-          <button class="btn btn--primary" type="button" id="qm-checkout">Request Order</button>
+          <button class="btn btn--primary" type="button" id="qm-checkout">Proceed to Checkout</button>
           <button class="btn btn--ghost" type="button" id="qm-add">Add to Cart</button>
         </div>
       </div>

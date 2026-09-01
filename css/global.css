@@ -230,6 +230,10 @@ h3 { font-size: var(--fs-h3); }
 /* --------------------------------------------------------------------------
    5b. FORM FIELDS  (shared — used on checkout + contact)
    -------------------------------------------------------------------------- */
+/* Any rule that sets `display` outranks the browser's [hidden] rule, so JS
+   toggling `.hidden = true` silently does nothing. Make [hidden] win. */
+[hidden] { display: none !important; }
+
 .field {
   display: block;
   margin-bottom: var(--space-sm);
