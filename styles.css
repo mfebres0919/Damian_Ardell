@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ABERCROMBIE & SCENTS — HOME PAGE
+   ABERCROMBIE & Scentz — HOME PAGE
    Page-specific styles only. Tokens, reset, buttons, and nav live in
    css/global.css
    ========================================================================== */
@@ -356,6 +356,11 @@
    -------------------------------------------------------------------------- */
 .shop {
   background-color: var(--bg-page);
+  background-image:
+    radial-gradient(60% 50% at 15% 0%, rgba(31, 45, 21, 0.55), transparent 70%),
+    radial-gradient(50% 40% at 100% 100%, rgba(30, 42, 28, 0.45), transparent 70%);
+  border-top: 1px solid rgba(138, 154, 123, 0.15);
+  border-bottom: 1px solid rgba(138, 154, 123, 0.15);
 }
 
 .shop__head {
@@ -684,11 +689,6 @@
 /* --------------------------------------------------------------------------
    OUR STORY
    -------------------------------------------------------------------------- */
-.story {
-  background:
-    radial-gradient(120% 80% at 0% 0%, rgba(30, 42, 28, 0.5) 0%, transparent 55%),
-    var(--bg-page);
-}
 
 .story__grid {
   display: grid;

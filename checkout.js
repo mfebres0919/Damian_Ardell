@@ -1,9 +1,10 @@
 /* ==========================================================================
-   ABERCROMBIE & SCENTS — checkout.js
+   ABERCROMBIE & Scentz — checkout.js
    Reads the same localStorage cart written on the home page.
    - Order summary items stay editable here (qty +/- and remove).
-   - Details are collected across three stages: Shipping → Payment → Review.
-   Mockup only: "Place Order" shows a confirmation and clears the cart.
+   - Details are collected across two stages: Your Details → Review.
+   No payment is taken here: the order request is emailed to Damian via
+   Formspree, and payment happens in person when he meets the customer.
    ========================================================================== */
 
 (function () {
@@ -82,7 +83,7 @@
 
     const subtotal = cart.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
     if (subtotalEl) subtotalEl.textContent = money(subtotal);
-    if (totalEl)    totalEl.textContent    = money(subtotal); // free shipping in the mockup
+    if (totalEl)    totalEl.textContent    = money(subtotal); // no shipping or tax — total is just the subtotal
   }
 
   // Line controls (event delegation)
@@ -104,13 +105,14 @@
   }
 
   /* =======================================================================
-     STAGED FORM — Shipping → Payment → Review
+     STAGED FORM — Your Details → Review
      ======================================================================= */
+  const LAST_STEP = 2;
   const steps   = Array.prototype.slice.call(document.querySelectorAll('.co-step'));
   const markers = Array.prototype.slice.call(document.querySelectorAll('[data-step-marker]'));
   let current = 1;
 
-  function showStep(n) {
+  function showStep(n, first) {
     current = n;
     steps.forEach(function (s) { s.hidden = Number(s.dataset.step) !== n; });
     markers.forEach(function (m) {
@@ -118,9 +120,10 @@
       m.classList.toggle('is-active', num === n);
       m.classList.toggle('is-done', num < n);
     });
-    if (n === 3) fillReview();
-    // Bring the form back into view when moving between stages.
-    if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (n === LAST_STEP) fillReview();
+    // Bring the form back into view when moving between stages — but not on the
+    // first paint, which would scroll the page title out of view on load.
+    if (form && !first) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // Validate only the required fields inside the current step.
@@ -141,25 +144,33 @@
 
   function fillReview() {
     const contact = document.getElementById('rv-contact');
-    const address = document.getElementById('rv-address');
-    const payment = document.getElementById('rv-payment');
+    const pickup  = document.getElementById('rv-pickup');
 
-    if (contact) contact.textContent = val('email') || '—';
-
-    if (address) {
-      const parts = [
-        val('fname'),
-        val('address1') + (val('address2') ? ', ' + val('address2') : ''),
-        [val('city'), val('state'), val('zip')].filter(Boolean).join(', '),
-        val('country')
-      ].filter(Boolean);
-      address.innerHTML = parts.join('<br />') || '—';
+    if (contact) {
+      const parts = [val('name'), val('email'), val('phone')].filter(Boolean);
+      contact.innerHTML = parts.join('<br />') || '—';
     }
 
-    if (payment) {
-      const card = val('card').replace(/\s+/g, '');
-      const last4 = card.slice(-4);
-      payment.textContent = last4 ? 'Card ending in ' + last4 : 'Card details entered';
+    if (pickup) {
+      const parts = [val('pickup'), val('notes')].filter(Boolean);
+      pickup.innerHTML = parts.join('<br />') || 'No preference given';
+    }
+
+    // The cart lives in localStorage, so fold it into hidden fields —
+    // otherwise the email would arrive with contact details and no order.
+    const cart = readCart();
+    const orderField = document.getElementById('rv-order-field');
+    const totalField = document.getElementById('rv-total-field');
+
+    if (orderField) {
+      orderField.value = cart.map(function (i) {
+        return i.qty + ' x ' + i.name + ' — ' + money(i.price * i.qty);
+      }).join('\n');
+    }
+    if (totalField) {
+      totalField.value = money(cart.reduce(function (sum, i) {
+        return sum + i.price * i.qty;
+      }, 0));
     }
   }
 
@@ -167,7 +178,7 @@
   if (form) {
     form.addEventListener('click', function (e) {
       if (e.target.closest('[data-next]')) {
-        if (validateStep(current)) showStep(Math.min(current + 1, 3));
+        if (validateStep(current)) showStep(Math.min(current + 1, LAST_STEP));
       } else if (e.target.closest('[data-prev]')) {
         showStep(Math.max(current - 1, 1));
       } else {
@@ -176,18 +187,36 @@
       }
     });
 
-    // Place order (visual only) — final submit from the Review step
+    // Send the order request to Damian's inbox via Formspree, then confirm.
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
 
-      clearCart();
-      const done = document.getElementById('co-done');
-      if (done) {
-        done.classList.add('is-open');
-        done.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-      }
+      const btn = form.querySelector('button[type="submit"]');
+      const label = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Request failed');
+          clearCart();
+          const done = document.getElementById('co-done');
+          if (done) {
+            done.classList.add('is-open');
+            done.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        })
+        .catch(function () {
+          // Don't clear the cart on failure — the customer would lose the order.
+          if (btn) { btn.disabled = false; btn.textContent = label; }
+          const err = document.getElementById('co-error');
+          if (err) err.hidden = false;
+        });
     });
   }
 
@@ -212,5 +241,5 @@
   }
 
   renderSummary();
-  showStep(1);
+  showStep(1, true);
 })();

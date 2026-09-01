@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ABERCROMBIE & SCENTS — GLOBAL
+   ABERCROMBIE & Scentz — GLOBAL
    Design tokens, reset, typography, and shared components.
    Page-specific styles live in styles.css
    ========================================================================== */
@@ -55,7 +55,8 @@
   /* Layout */
   --container-max: 1360px;
   --gutter: clamp(1.25rem, 5vw, 4rem);
-  --nav-height: 84px;
+  --logo-height: 100px;                              /* nav lockup height */
+  --nav-height: calc(var(--logo-height) + 2rem);     /* logo + breathing room */
 
   /* Effects */
   --radius-sm: 2px;
@@ -332,25 +333,11 @@ h3 { font-size: var(--fs-h3); }
   flex-shrink: 0;
 }
 
-.nav__mark {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--color-tan);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--color-tan);
+.nav__logo-img {
+  height: var(--logo-height);
+  width: auto;
+  display: block;
   flex-shrink: 0;
-}
-
-.nav__wordmark {
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 3vw, 1.35rem);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  line-height: 1;
 }
 
 /* --- Menu — inline row on desktop, drawer on mobile --------------------- */
@@ -457,7 +444,7 @@ h3 { font-size: var(--fs-h3); }
 
 /* --- Mobile nav --------------------------------------------------------- */
 @media (max-width: 900px) {
-  :root { --nav-height: 72px; }
+  :root { --logo-height: 62px; }
 
   .nav__toggle { display: flex; }
 
@@ -527,6 +514,9 @@ h3 { font-size: var(--fs-h3); }
 .footer__brand { max-width: 26rem; }
 
 .footer__brand .nav__logo { margin-bottom: var(--space-md); }
+
+/* The footer has vertical room, so the lockup runs larger than in the nav. */
+.footer__brand .nav__logo-img { height: 148px; }
 
 .footer__tagline {
   color: var(--text-muted);

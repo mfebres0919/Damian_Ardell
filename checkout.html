@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout — Abercrombie &amp; Scents</title>
-  <meta name="description" content="Secure checkout — Abercrombie &amp; Scents." />
+  <title>Request an Order — Abercrombie &amp; Scentz</title>
+  <meta name="description" content="Request an order from Abercrombie &amp; Scentz — we'll reach out to arrange pickup and payment." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,9 +20,8 @@
     <div class="container co-nav__inner">
       <a class="co-nav__back" href="index.html#collection">&larr; Back to Shop</a>
 
-      <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scents — home">
-        <span class="nav__mark" aria-hidden="true">A</span>
-        <span class="nav__wordmark">Abercrombie &amp; Scents</span>
+      <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scentz — home">
+        <img class="nav__logo-img" src="images/logo-white.png" alt="" width="1113" height="1135" decoding="async" />
       </a>
 
       <span class="co-nav__secure">
@@ -41,123 +40,65 @@
       <!-- ---------------- LEFT: staged details form ---------------- -->
       <section class="co__form" aria-label="Checkout details">
 
-        <h1 class="co__title">Checkout</h1>
+        <h1 class="co__title">Request an Order</h1>
+        <p class="co__lead">
+          Tell us what you&rsquo;d like and how to reach you. Damian will get in
+          touch to arrange a time to meet up and settle payment in person &mdash;
+          no card details needed here.
+        </p>
 
         <!-- Progress stepper -->
         <ol class="co-steps" id="co-steps" aria-label="Checkout progress">
           <li class="co-steps__step is-active" data-step-marker="1">
             <span class="co-steps__dot">1</span>
-            <span class="co-steps__label">Shipping</span>
+            <span class="co-steps__label">Your Details</span>
           </li>
           <li class="co-steps__step" data-step-marker="2">
             <span class="co-steps__dot">2</span>
-            <span class="co-steps__label">Payment</span>
-          </li>
-          <li class="co-steps__step" data-step-marker="3">
-            <span class="co-steps__dot">3</span>
             <span class="co-steps__label">Review</span>
           </li>
         </ol>
 
-        <form id="checkout-form" novalidate>
+        <form id="checkout-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
 
-          <!-- ===== STEP 1 — SHIPPING ===== -->
+          <!-- ===== STEP 1 — YOUR DETAILS ===== -->
           <div class="co-step" data-step="1">
 
             <fieldset class="co__block">
-              <legend class="co__legend">Contact Information</legend>
+              <legend class="co__legend">How to reach you</legend>
+              <label class="field">
+                <span class="field__label">Full name</span>
+                <input type="text" name="name" autocomplete="name" required />
+              </label>
               <label class="field">
                 <span class="field__label">Email address</span>
                 <input type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
               </label>
+              <label class="field">
+                <span class="field__label">Phone number</span>
+                <input type="tel" name="phone" placeholder="(555) 123-4567" autocomplete="tel" required />
+              </label>
             </fieldset>
 
             <fieldset class="co__block">
-              <legend class="co__legend">Shipping Address</legend>
+              <legend class="co__legend">Meeting up</legend>
               <label class="field">
-                <span class="field__label">Full name</span>
-                <input type="text" name="fname" autocomplete="name" required />
-              </label>
-              <label class="field">
-                <span class="field__label">Address line 1</span>
-                <input type="text" name="address1" placeholder="House number and street name" autocomplete="address-line1" required />
-              </label>
-              <label class="field">
-                <span class="field__label">Address line 2 <span class="field__opt">(optional)</span></span>
-                <input type="text" name="address2" placeholder="Apartment, suite, etc." autocomplete="address-line2" />
-              </label>
-              <div class="field-row">
-                <label class="field">
-                  <span class="field__label">City</span>
-                  <input type="text" name="city" autocomplete="address-level2" required />
-                </label>
-                <label class="field">
-                  <span class="field__label">State / Province</span>
-                  <input type="text" name="state" autocomplete="address-level1" required />
-                </label>
-              </div>
-              <div class="field-row">
-                <label class="field">
-                  <span class="field__label">ZIP / Postal code</span>
-                  <input type="text" name="zip" autocomplete="postal-code" inputmode="numeric" required />
-                </label>
-                <label class="field">
-                  <span class="field__label">Country</span>
-                  <select class="field__select" name="country" required>
-                    <option value="United States" selected>United States</option>
-                    <option value="Canada">Canada</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Australia">Australia</option>
-                  </select>
-                </label>
-              </div>
-
-              <label class="co-check">
-                <input type="checkbox" name="save" checked />
-                <span class="co-check__box" aria-hidden="true">
-                  <svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.5" /></svg>
+                <span class="field__label">
+                  When works for you? <span class="field__opt">(optional)</span>
                 </span>
-                <span>Save this information for next time</span>
+                <input type="text" name="pickup" placeholder="e.g. weekday evenings, or Saturday morning" />
+              </label>
+              <label class="field">
+                <span class="field__label">
+                  Anything else we should know? <span class="field__opt">(optional)</span>
+                </span>
+                <textarea name="notes" rows="4"
+                          placeholder="Scent preferences, a question, where you're usually located&hellip;"></textarea>
               </label>
             </fieldset>
 
             <div class="co-step__nav">
               <a class="co-step__back" href="index.html#collection">&larr; Back to Shop</a>
-              <button class="btn btn--primary co-step__next" type="button" data-next>
-                Continue to Payment
-                <svg class="btn__icon" viewBox="0 0 512.009 512.009" aria-hidden="true"><path d="M508.625 247.801 392.262 131.437c-4.18-4.881-11.526-5.45-16.407-1.269-4.881 4.18-5.45 11.526-1.269 16.407.39.455.814.88 1.269 1.269l96.465 96.582H11.636C5.21 244.426 0 249.636 0 256.063s5.21 11.636 11.636 11.636H472.32l-96.465 96.465c-4.881 4.18-5.45 11.526-1.269 16.407s11.526 5.45 16.407 1.269c.455-.39.88-.814 1.269-1.269l116.364-116.364c4.512-4.472 4.512-11.802 0-16.341z"></path></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- ===== STEP 2 — PAYMENT ===== -->
-          <div class="co-step" data-step="2" hidden>
-
-            <fieldset class="co__block">
-              <legend class="co__legend">Payment</legend>
-              <p class="co__demo-note">Demo only — do not enter real card details.</p>
-              <label class="field">
-                <span class="field__label">Cardholder name</span>
-                <input type="text" name="cardname" autocomplete="cc-name" required />
-              </label>
-              <label class="field">
-                <span class="field__label">Card number</span>
-                <input type="text" name="card" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number" required />
-              </label>
-              <div class="field-row">
-                <label class="field">
-                  <span class="field__label">Expiry</span>
-                  <input type="text" name="exp" placeholder="MM / YY" autocomplete="cc-exp" required />
-                </label>
-                <label class="field">
-                  <span class="field__label">CVC</span>
-                  <input type="text" name="cvc" placeholder="123" inputmode="numeric" autocomplete="cc-csc" required />
-                </label>
-              </div>
-            </fieldset>
-
-            <div class="co-step__nav">
-              <button class="co-step__back" type="button" data-prev>&larr; Back to Shipping</button>
               <button class="btn btn--primary co-step__next" type="button" data-next>
                 Continue to Review
                 <svg class="btn__icon" viewBox="0 0 512.009 512.009" aria-hidden="true"><path d="M508.625 247.801 392.262 131.437c-4.18-4.881-11.526-5.45-16.407-1.269-4.881 4.18-5.45 11.526-1.269 16.407.39.455.814.88 1.269 1.269l96.465 96.582H11.636C5.21 244.426 0 249.636 0 256.063s5.21 11.636 11.636 11.636H472.32l-96.465 96.465c-4.881 4.18-5.45 11.526-1.269 16.407s11.526 5.45 16.407 1.269c.455-.39.88-.814 1.269-1.269l116.364-116.364c4.512-4.472 4.512-11.802 0-16.341z"></path></svg>
@@ -165,8 +106,8 @@
             </div>
           </div>
 
-          <!-- ===== STEP 3 — REVIEW ===== -->
-          <div class="co-step" data-step="3" hidden>
+          <!-- ===== STEP 2 — REVIEW ===== -->
+          <div class="co-step" data-step="2" hidden>
 
             <fieldset class="co__block">
               <legend class="co__legend">Review Your Order</legend>
@@ -181,24 +122,33 @@
                 </div>
                 <div class="co-review__row">
                   <div>
-                    <p class="co-review__label">Ship to</p>
-                    <p class="co-review__val" id="rv-address">—</p>
+                    <p class="co-review__label">Meeting up</p>
+                    <p class="co-review__val" id="rv-pickup">—</p>
                   </div>
                   <button class="co-review__edit" type="button" data-goto="1">Edit</button>
                 </div>
                 <div class="co-review__row">
                   <div>
                     <p class="co-review__label">Payment</p>
-                    <p class="co-review__val" id="rv-payment">—</p>
+                    <p class="co-review__val">In person when you meet up</p>
                   </div>
-                  <button class="co-review__edit" type="button" data-goto="2">Edit</button>
                 </div>
               </div>
+
+              <!-- Populated by checkout.js so the order reaches Damian's inbox -->
+              <input type="hidden" name="order" id="rv-order-field" />
+              <input type="hidden" name="order_total" id="rv-total-field" />
+              <input type="hidden" name="_subject" value="New order request — Abercrombie & Scentz" />
             </fieldset>
 
+            <p class="co__error" id="co-error" role="alert" hidden>
+              Something went wrong sending your request. Please try again, or
+              reach us from the <a href="index.html#contact">contact form</a>.
+            </p>
+
             <div class="co-step__nav">
-              <button class="co-step__back" type="button" data-prev>&larr; Back to Payment</button>
-              <button class="btn btn--primary co-step__next" type="submit">Place Order</button>
+              <button class="co-step__back" type="button" data-prev>&larr; Back to Your Details</button>
+              <button class="btn btn--primary co-step__next" type="submit">Send Order Request</button>
             </div>
           </div>
 
@@ -220,10 +170,6 @@
             <dt>Subtotal</dt>
             <dd id="co-subtotal">$0.00</dd>
           </div>
-          <div class="co__total-row">
-            <dt>Shipping</dt>
-            <dd id="co-shipping">Free</dd>
-          </div>
           <div class="co__total-row co__total-row--grand">
             <dt>Total</dt>
             <dd id="co-total">$0.00</dd>
@@ -236,23 +182,22 @@
               <path d="M12 3l7 3v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6z" />
               <path d="M9 12l2 2 4-4" />
             </svg>
-            Secure<br />Checkout
+            Meet in<br />Person
           </li>
           <li class="co-trust__item">
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 7h11v8H3z" />
-              <path d="M14 10h4l3 3v2h-7z" />
-              <circle cx="7" cy="17" r="2" />
-              <circle cx="17" cy="17" r="2" />
+              <rect x="2.5" y="6" width="19" height="12" rx="2" />
+              <path d="M2.5 10h19" />
+              <path d="M4 20L20 4" />
             </svg>
-            Free<br />Shipping
+            No Card<br />Needed
           </li>
           <li class="co-trust__item">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 12a8 8 0 1 1 2.3 5.6" />
               <path d="M4 20v-4h4" />
             </svg>
-            Easy<br />Returns
+            Made in<br />Small Batches
           </li>
         </ul>
       </aside>
@@ -267,9 +212,8 @@
       <div class="footer__top">
 
         <div class="footer__brand">
-          <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scents — home">
-            <span class="nav__mark" aria-hidden="true">A</span>
-            <span class="nav__wordmark">Abercrombie &amp; Scents</span>
+          <a class="nav__logo" href="index.html" aria-label="Abercrombie and Scentz — home">
+            <img class="nav__logo-img" src="images/logo-white.png" alt="" width="1113" height="1135" decoding="async" loading="lazy" />
           </a>
           <p class="footer__tagline">
             Handcrafted goat milk soap &amp; roll-on scented oils, made in small
@@ -336,11 +280,11 @@
       </div>
 
       <div class="footer__bottom">
-        <p class="footer__copy">&copy; 2026 Abercrombie &amp; Scents. All rights reserved.</p>
+        <p class="footer__copy">&copy; 2026 Abercrombie &amp; Scentz. All rights reserved.</p>
         <div class="footer__legal">
           <a class="footer__link" href="#">Privacy Policy</a>
           <a class="footer__link" href="#">Terms of Service</a>
-          <a class="footer__link" href="#">Shipping &amp; Returns</a>
+          <a class="footer__link" href="#">Pickup &amp; Returns</a>
         </div>
       </div>
 
@@ -354,10 +298,10 @@
         <circle cx="26" cy="26" r="24" />
         <path d="M16 27l7 7 13-15" />
       </svg>
-      <h2 class="co-done__title" id="co-done-title">Thank you</h2>
+      <h2 class="co-done__title" id="co-done-title">Request sent</h2>
       <p class="co-done__msg">
-        Your order has been placed. This is a demo — no payment was processed
-        and nothing will ship.
+        Thanks — your order request is on its way to Damian. He&rsquo;ll reach out
+        shortly to set up a time to meet and take payment then.
       </p>
       <a class="btn btn--primary" href="index.html">Back to Home</a>
     </div>
